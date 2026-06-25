@@ -1,18 +1,18 @@
 class Solution {
 public:
-    bool dfs(unordered_map<int,list<int>>&adj, unordered_map<int,bool>&visited,unordered_map<int,bool>&pathvisited,int node,vector<int>&ans){
+    bool dfs(unordered_map<int,list<int>>&adj, unordered_map<int,bool>&visited,unordered_map<int,bool>&pathvisited,int node,stack<int>&st){
         visited[node]=true;
         pathvisited[node]=true;
         
         for(auto i:adj[node]){
             if(!visited[i]){
-               if( dfs(adj,visited,pathvisited,i,ans))return true;
+               if( dfs(adj,visited,pathvisited,i,st))return true;
             }
             else if(pathvisited[i]){
                 return true;
             }
         }
-        ans.push_back(node);
+        st.push(node);
         pathvisited[node]=false;
         return false;
     }
@@ -26,16 +26,19 @@ public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         unordered_map<int,list<int>> adj;
         build(prerequisites,adj);
-        vector<int>ans;
+        stack<int>st;
         unordered_map<int,bool>visited;
         unordered_map<int,bool>pathvisited;
         for(int i=0;i<numCourses;i++){
             if(!visited[i]){
-                if(dfs(adj,visited,pathvisited,i,ans)) return {};
+                if(dfs(adj,visited,pathvisited,i,st)) return {};
             }
 
         }
-        reverse(ans.begin(),ans.end());
+        vector<int>ans;
+        while(!st.empty()){
+            ans.push_back(st.top());st.pop();
+        }
         return ans;
     }
 };
