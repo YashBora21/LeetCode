@@ -1,20 +1,26 @@
 class Solution {
 public:
-    bool dfs(unordered_map<int,list<int>>&adj, unordered_map<int,bool>&visited,unordered_map<int,bool>&pathvisited,int node,stack<int>&st){
-        visited[node]=true;
-        pathvisited[node]=true;
-        
-        for(auto i:adj[node]){
-            if(!visited[i]){
-               if( dfs(adj,visited,pathvisited,i,st))return true;
-            }
-            else if(pathvisited[i]){
-                return true;
+    void bfs(unordered_map<int,list<int>>&adj,vector<int>&ans,vector<int>&indegree){
+        queue<int>q;
+        for(int i=0;i<indegree.size();i++){
+            if(indegree[i]==0){
+                q.push(i);
             }
         }
-        st.push(node);
-        pathvisited[node]=false;
-        return false;
+        while(!q.empty()){
+            
+                int frontnode=q.front();q.pop();
+                ans.push_back(frontnode);
+                for(auto i:adj[frontnode]){
+                    indegree[i]--;
+                    if(indegree[i]==0){
+                         q.push(i);
+                       
+                    }
+                }
+            
+        }
+        
     }
     void build(vector<vector<int>>& prerequisites,unordered_map<int,list<int>>&adj){
         for(auto i:prerequisites){
@@ -26,19 +32,20 @@ public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         unordered_map<int,list<int>> adj;
         build(prerequisites,adj);
-        stack<int>st;
-        unordered_map<int,bool>visited;
-        unordered_map<int,bool>pathvisited;
-        for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                if(dfs(adj,visited,pathvisited,i,st)) return {};
-            }
-
-        }
+        
         vector<int>ans;
-        while(!st.empty()){
-            ans.push_back(st.top());st.pop();
+        vector<int>indegree(numCourses);
+        for(auto i:adj){
+            for(auto j:i.second){
+                indegree[j]++;
+            }
         }
-        return ans;
+        
+
+        bfs(adj,ans,indegree);
+       
+        
+        if(ans.size()!=numCourses) return {};
+        else return ans;
     }
 };
