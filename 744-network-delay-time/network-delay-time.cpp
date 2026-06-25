@@ -1,16 +1,16 @@
 class Solution {
 public:
-    void dijibfs(unordered_map<int,vector<pair<int,int>>>&adj,set<pair<int,int>>&st,vector<int>&dist,int n,int k){
-        st.insert({0,k});
+    void dijibfs(unordered_map<int,vector<pair<int,int>>>&adj,priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>&pq,vector<int>&dist,int n,int k){
+        pq.push({0,k});
         dist[k]=0;
-        while(!st.empty()){
-            auto top=*st.begin();
-            st.erase(st.begin());
+        while(!pq.empty()){
+            auto top=pq.top();
+            pq.pop();
             for(auto i:adj[top.second]){
                 int distance=top.first+i.first;
                 if(dist[i.second]>distance){
                     dist[i.second]=distance;
-                    st.insert({distance,i.second});
+                    pq.push({distance,i.second});
                 }
             }
         }
@@ -27,8 +27,8 @@ public:
         unordered_map<int,vector<pair<int,int>>>adj;
         build(times,adj);
         vector<int>dist(n+1,INT_MAX);
-        set<pair<int,int>>st;
-        dijibfs(adj,st,dist,n,k);\
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        dijibfs(adj,pq,dist,n,k);
         int maxi=0;
         for(int i=1;i<=n;i++){
             if(dist[i]==INT_MAX){
