@@ -7,6 +7,7 @@ public:
             auto front=pq.top();
             pq.pop();
             int stops=front[2];
+            if(front[0]>dist[front[1]][stops])continue;
             for(auto i:adj[front[1]]){
                 int distance=front[0]+i.first;
                 int newstops=stops+1;
