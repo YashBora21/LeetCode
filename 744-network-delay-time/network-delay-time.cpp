@@ -6,6 +6,7 @@ public:
         while(!pq.empty()){
             auto top=pq.top();
             pq.pop();
+            if(top.first>dist[top.second]) continue;
             for(auto i:adj[top.second]){
                 int distance=top.first+i.first;
                 if(dist[i.second]>distance){
