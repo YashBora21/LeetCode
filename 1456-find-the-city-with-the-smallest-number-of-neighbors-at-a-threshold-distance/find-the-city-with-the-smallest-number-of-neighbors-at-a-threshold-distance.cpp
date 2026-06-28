@@ -8,6 +8,7 @@ public:
         while(!pq.empty()){
             auto top=pq.top();
             pq.pop();
+            if(distance[top.second]>top.first) continue;
             for(auto i:adj[top.second]){
                 int dis=i.second+top.first;
                 if(distance[i.first]>dis && dis<=distanceThreshold){
