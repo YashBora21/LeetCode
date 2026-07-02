@@ -12,14 +12,16 @@ public:
             int dc[4]={0,0,-1,1};
             auto ele=pq.top();
             pq.pop();
-            
+            int r=ele[1];
+            int c=ele[2];
+            int s=ele[0];
+             if(s>distance[r][c])continue;
+                if(r==rows-1 && c==cols-1) return distance[r][c];
             for(int i=0;i<4;i++){
-                int r=ele[1];
-                int c=ele[2];
-                int s=ele[0];
+                
                 int nr=r+dr[i];
                 int nc=c+dc[i];
-                
+               
                 if(nr>=0 && nc>=0 && nr<rows && nc<cols){
                    int newcost=max(s,grid[nr][nc]);
                    if(newcost<distance[nr][nc]){
