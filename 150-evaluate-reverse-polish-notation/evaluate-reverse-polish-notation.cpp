@@ -2,7 +2,7 @@ class Solution {
 public:
     long long opt(long long num1,long long num2,char op){
         if (op == '+') return num2 + num1;
-        if (op == '-') return num2 - num1; // Order matters: num2 comes first!
+        if (op == '-') return num2 - num1; 
         if (op == '*') return num2 * num1;
         if (op == '/') return num2 / num1; // Order matters: num2 comes first!
         return 0;
