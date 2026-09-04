@@ -13,11 +13,12 @@ class Solution {
 public:
     TreeNode* dfs(TreeNode* root, int val) {
         if(root==NULL || root->val==val) return root;
-        TreeNode* left=dfs(root->left,val);
-        if(left!=NULL){
-            return left;
+         if (val < root->val) {
+            return searchBST(root->left, val);
         }
-        return dfs(root->right,val);
+
+        // val is greater than root's value -> search right subtree
+        return searchBST(root->right, val);
     }
         
     TreeNode* searchBST(TreeNode* root, int val) {
