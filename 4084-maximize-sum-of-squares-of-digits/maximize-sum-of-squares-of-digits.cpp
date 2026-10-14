@@ -3,7 +3,7 @@ public:
     string maxSumOfSquares(int num, int sum) {
         string ans="";
         int cur=9;
-        if (sum < 0 || sum > 9LL * num)
+        if (sum < 0 || sum >(long long)9*num)
             return "";
         while(ans.size()!=num){
             if(sum>=cur && cur>=0){
