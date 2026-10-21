@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool issorted(string s){
+        for(int i=1;i<s.size();i++){
+            if(s[i-1]>s[i])return false;
+        }
+        return true;
+    }
+    int minOperations(string s) {
+        if(issorted(s))return 0;
+        if(s.size()==2)return -1;
+        char mn=*min_element(s.begin(),s.end());
+        char mx=*max_element(s.begin(),s.end());
+        
+        if(s[0]==mn || s[s.size()-1]==mx) return 1;
+        for(int i=1;i<s.size()-1;i++){
+            if(s[i]==mn || s[i]==mx)return 2;
+        }
+      
+        return 3;
+    }
+   
+};
