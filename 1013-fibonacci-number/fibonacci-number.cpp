@@ -5,13 +5,12 @@ public:
         int prev2=1;
         int prev1=0;
 
-        int curr=0;
         for(int i=2;i<=n;i++){
-        curr=prev2+prev1;
+        int curr=prev2+prev1;
         prev1=prev2;
         prev2=curr;
         }
-        return curr;
+        return prev2;
     }
    
 };
